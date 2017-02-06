@@ -34,7 +34,10 @@ export class RegistrationPage extends React.Component {
     this.setState({saving: true});
 
     this.props.actions.signInWithEmailAndPassword(this.state.user)
-      .then(user => toastr.success('You are logged in'))
+      .then(user => {
+        toastr.success('You are logged in');
+        this.context.router.push('/newfeature');
+      })
       .catch(error => {
         toastr.error(error.message);
         this.setState({saving: false});
