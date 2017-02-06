@@ -37,7 +37,7 @@ export class RegistrationPage extends React.Component {
       .then((user) => {
         toastr.success('User Created');
         this.context.router.push('/newfeature');
-      }
+      })
       .catch(error => {
         toastr.error(error.message);
         this.setState({saving: false});
