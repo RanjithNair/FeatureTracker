@@ -10,7 +10,7 @@
     "dev": "SET NODE_ENV=development && npm start",
     "startsdev": "node devServer.js",
     "start": "node ./server/app.js",
-    "postinstall": "SET NPM_CONFIG_PRODUCTION=false && webpack --config webpack.config.dev.js --progress --colors",
+    "postinstall": "webpack --config webpack.config.dev.js --progress --colors",
     "lint": "eslint src"
   },
   "keywords": [
