@@ -1,7 +1,7 @@
 {
-  "name": "react-hot-redux-firebase-starter",
+  "name": "FeatureTracker",
   "version": "0.1.0",
-  "description": "Boilerplate for ReactJS, Redux, Hot Loading and Firebase 3.x",
+  "description": "Web Application to maintain and monitor features in a Scrum team",
   "scripts": {
     "prestart": "babel-node tools/startMessage.js",
     "start": "npm-run-all --parallel test:watch open:src lint:watch",
@@ -21,14 +21,16 @@
     "live",
     "edit",
     "webpack",
-    "firebase"
+    "firebase",
+    "feature",
+    "scrum"
   ],
-  "author": "Dan Abramov <dan.abramov@me.com> (http://github.com/gaearon)",
+  "author": "Ranjith Nair <ranjith2112@gmail.com> (http://ranjithnair.github.io/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gaearon/react-hot-boilerplate/issues"
+    "url": "https://github.com/RanjithNair/FeatureTracker/issues"
   },
-  "homepage": "https://github.com/gaearon/react-hot-boilerplate",
+  "homepage": "https://github.com/RanjithNair/FeatureTracker",
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.1",
@@ -80,6 +82,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gaearon/react-hot-boilerplate.git"
+    "url": "https://github.com/RanjithNair/FeatureTracker.git"
   }
 }
