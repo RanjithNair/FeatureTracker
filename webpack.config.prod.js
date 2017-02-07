@@ -4,8 +4,6 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
-    'webpack-hot-middleware/client',
     './src/index'
   ],
   output: {
@@ -15,24 +13,27 @@ module.exports = {
   },
   plugins: [
     /**
-     * This is where the magic happens! You need this to enable Hot Module Replacement!
+     * This plugin assigns the module and chunk ids by occurence count. What this
+     * means is that frequently used IDs will get lower/shorter IDs - so they become
+     * more predictable.
      */
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     /**
-     * NoErrorsPlugin prevents your webpack CLI from exiting with an error code if
-     * there are errors during compiling - essentially, assets that include errors
-     * will not be emitted. If you want your webpack to 'fail', you need to check out
-     * the bail option.
-     */
-    new webpack.NoErrorsPlugin(),
-    /**
-     * DefinePlugin allows us to define free variables, in any webpack build, you can
-     * use it to create separate builds with debug logging or adding global constants!
-     * Here, we use it to specify a development build.
+     * See description in 'webpack.config.dev' for more info.
      */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
+    /**
+     * Some of you might recognize this! It minimizes all your JS output of chunks.
+     * Loaders are switched into a minmizing mode. Obviously, you'd only want to run
+     * your production code through this!
+     */
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    })
   ],
   module: {
     loaders: [

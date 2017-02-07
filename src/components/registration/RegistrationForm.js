@@ -14,6 +14,7 @@ const RegistrationForm = ({user, onSave, onChange, saving}) => {
 
       <TextInput
         name="password"
+        type="password"
         label="Password"
         onChange={onChange}
         value={user.password}
