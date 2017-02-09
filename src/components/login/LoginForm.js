@@ -17,16 +17,16 @@ const LoginForm = ({user, onSave, onChange, saving}) => {
         <TextInput
           name="password"
           type="password"
-          label="Password"
+          placeholder="password"
           onChange={onChange}
           value={user.password}
           />
-        <input
+        <button
           type="submit"
           disabled={saving}
-          value={saving ? 'Logining in...' : 'Login'}
-          className="btn btn-primary btn-block btn-large"
-          onClick={onSave}/>
+          onClick={onSave}
+          className="btn btn-primary btn-block btn-large">{saving ? 'Logining in...' : 'Login'}
+        </button>
     </form>
   </div>
   </div>
