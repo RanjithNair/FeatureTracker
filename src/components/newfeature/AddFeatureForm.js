@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddFeatureForm = ({feature, onSave, saving, onChange}) => {
+const AddFeatureForm = ({feature, onSave, saving, onChange, releases}) => {
   return (
     <div className="container">
       <h2>Add new Feature</h2>
@@ -22,6 +22,19 @@ const AddFeatureForm = ({feature, onSave, saving, onChange}) => {
               <option>11</option>
               <option>12</option>
               <option>13</option>
+            </select>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-2" for="sprint-num">Select Release:</label>
+          <div className="col-sm-10">
+            <select class="form-control" id="release-title" name="release-title" onChange={onChange}>
+              {
+                releases.map(function(release, index) {
+                  return <option key={index}
+                    value={release}>{release}</option>;
+                })
+              }
             </select>
           </div>
         </div>

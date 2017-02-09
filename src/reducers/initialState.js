@@ -20,10 +20,11 @@ export default {
     featureTitle: null,
     sprintNum: "1",
     environments: [],
-    isSaved: false
+    isSaved: false,
   },
   featureDashboard : {
     featureList: null,
+    releaseList: []
   },
   ajaxCallsInProgress: 0
 };

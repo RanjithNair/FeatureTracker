@@ -26,6 +26,8 @@ export default function newFeatureReducer(state = initialState.newFeature, actio
       }
     case types.FEATURE_CREATED_SUCCESS:
       return Object.assign({}, state, initialState.newFeature);
+    case types.CHANGE_RELEASE_CYCLE:
+      return Object.assign({}, state, {releaseTitle: action.payload});
     default:
       return state;
   }

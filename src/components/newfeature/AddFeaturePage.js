@@ -18,6 +18,10 @@ export class AddFeaturePage extends React.Component {
     this.updateUserState = this.updateUserState.bind(this);
   }
 
+  componentDidMount() {
+    this.props.actions.getReleaseList();
+  }
+
   updateUserState(event) {
     const field = event.target.name;
     // Based on the field, dipatch actions
@@ -30,6 +34,9 @@ export class AddFeaturePage extends React.Component {
         break;
       case 'sprint-num':
         this.props.actions.changeSprintNum(event.target.value);
+        break;
+      case 'release-title':
+        this.props.actions.changeReleaseCycle(event.target.value);
         break;
       default:
         console.log('came null');
@@ -57,8 +64,9 @@ export class AddFeaturePage extends React.Component {
         <AddFeatureForm
           onSave={this.createFeature}
           saving={this.state.saving}
-          feature={this.state.newFeature}
+          feature={this.props.feature}
           onChange={this.updateUserState}
+          releases={this.props.releases}
         />
         <FeatureDashboardPage />
       </div>
@@ -75,7 +83,7 @@ AddFeaturePage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return {feature: state.newFeature};
+  return {feature: state.newFeature, releases: state.featureDashboard.releaseList};
 }
 
 function mapDispatchToProps(dispatch) {

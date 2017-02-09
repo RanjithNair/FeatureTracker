@@ -24,6 +24,13 @@ export function setFeatureList(features) {
   };
 }
 
+export function setReleaseList(releases) {
+  return {
+    type: types.RECIEVED_RELEASE_LIST,
+    payload: releases
+  };
+}
+
 export function getFeatures() {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -31,6 +38,21 @@ export function getFeatures() {
       dispatch(featureCreatedSuccess());
       //dispatch another action to save the feature list to the state
       dispatch(setFeatureList(feature.val()));
+    }).catch(error => {
+      dispatch(ajaxCallError(error));
+      // @TODO better error handling
+      throw (error);
+    });
+  };
+}
+
+export function getReleaseList() {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return firebaseApi.GetAllValues('releases').then(releases => {
+      dispatch(featureCreatedSuccess());
+      //dispatch another action to save the feature list to the state
+      dispatch(setReleaseList(releases.val()));
     }).catch(error => {
       dispatch(ajaxCallError(error));
       // @TODO better error handling
@@ -66,6 +88,13 @@ export function changeSprintNum(sprintNum) {
   return {
     type: types.CHANGE_SPRINT_CYCLE,
     payload: sprintNum
+  };
+}
+
+export function changeReleaseCycle(releaseTitle) {
+  return {
+    type: types.CHANGE_RELEASE_CYCLE,
+    payload: releaseTitle
   };
 }
 
