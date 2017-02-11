@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {createUserWithEmailAndPassword} from '../../actions/authActions';
+import {createUserWithEmailAndPassword, assignUserNameToEmail} from '../../actions/authActions';
 import RegistrationForm from './RegistrationForm';
 import toastr from 'toastr';
 
@@ -35,6 +35,7 @@ export class RegistrationPage extends React.Component {
 
     this.props.actions.createUserWithEmailAndPassword(this.state.user)
       .then((user) => {
+        //this.props.actions.assignUserNameToEmail("RJ", user);
         toastr.success('User Created');
         this.context.router.push('/newfeature');
       })
@@ -70,7 +71,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({createUserWithEmailAndPassword}, dispatch)
+    actions: bindActionCreators({createUserWithEmailAndPassword, assignUserNameToEmail}, dispatch)
   };
 }
 

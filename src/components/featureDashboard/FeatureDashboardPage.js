@@ -28,13 +28,12 @@ export class FeatureDashboardPage extends React.Component {
         if(event.target.checked) {
           if(envValue.indexOf(event.target.value) === -1){
             envValue.push(event.target.value);
-            this.props.actions.updateFeature(event.target.id,'environments',envValue);
-            toastr.success('Feature Updated');
           }
         }else{
           envValue.splice(envValue.indexOf(event.target.value),1);
-          this.props.actions.updateFeature(event.target.id,'environments',envValue);
         }
+        this.props.actions.updateFeature(event.target.id,'environments',envValue);
+        toastr.success('Feature Updated');
       }
     }
   }
@@ -50,7 +49,9 @@ export class FeatureDashboardPage extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {features: state.featureDashboard.featureList};
+  return {
+    features: state.featureDashboard.featureList
+  };
 }
 
 function mapDispatchToProps(dispatch) {

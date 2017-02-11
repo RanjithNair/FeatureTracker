@@ -83,7 +83,11 @@ AddFeaturePage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return {feature: state.newFeature, releases: state.featureDashboard.releaseList};
+  return {
+    feature: state.newFeature,
+    releases: state.featureDashboard.releaseList,
+    currentUserName: state.auth.currentUserName
+  };
 }
 
 function mapDispatchToProps(dispatch) {

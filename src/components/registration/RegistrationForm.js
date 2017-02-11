@@ -11,7 +11,12 @@ const RegistrationForm = ({user, onSave, onChange, saving}) => {
         onChange={onChange}
         value={user.email}
         />
-
+      <TextInput
+        name="username"
+        label="username"
+        onChange={onChange}
+        value={user.name}
+      />
       <TextInput
         name="password"
         type="password"

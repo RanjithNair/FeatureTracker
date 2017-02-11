@@ -17,6 +17,12 @@ class FirebaseApi {
     });
   }
 
+  static assignUserNameToEmailId(userName) {
+    return firebase.auth().currentUser.updateProfile({
+      displayName: userName
+    });
+  }
+
   static createUserWithEmailAndPassword(user){
     return firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
   }
@@ -30,11 +36,16 @@ class FirebaseApi {
   }
 
   static databasePush(path, value) {
+    let newValue = Object.assign({}, value, {
+      lastModifiedDtm : firebase.database.ServerValue.TIMESTAMP,
+      createdUser : firebase.auth().currentUser.displayName
+    });
+
     return new Promise((resolve, reject) => {
       firebase
         .database()
         .ref(path)
-        .push(value, (error) => {
+        .push(newValue, (error) => {
           if (error) {
             reject(error);
           } else {
@@ -75,7 +86,9 @@ class FirebaseApi {
     .database()
     .ref(path + '/' + key)
     .update({
-      environments: value
+      environments: value,
+      lastModifiedDtm: firebase.database.ServerValue.TIMESTAMP,
+      lastModifiedUser: firebase.auth().currentUser.displayName
     });
   }
 

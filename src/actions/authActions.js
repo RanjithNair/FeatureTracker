@@ -13,9 +13,13 @@ export function authInitializedDone() {
   };
 }
 
-export function authLoggedInSuccess(userUID) {
+export function authLoggedInSuccess(userUID, userName) {
   return {
-    type: types.AUTH_LOGGED_IN_SUCCESS, userUID
+    type: types.AUTH_LOGGED_IN_SUCCESS,
+    payload: {
+      userUID,
+      userName
+    }
   };
 }
 
@@ -28,16 +32,16 @@ export function authInitialized(user) {
   return (dispatch) => {
     dispatch(authInitializedDone());
     if (user) {
-      dispatch(authLoggedIn(user.uid));
+      dispatch(authLoggedIn(user.uid, user.displayName));
     } else {
       dispatch(authLoggedOutSuccess());
     }
   };
 }
 
-export function authLoggedIn(userUID) {
+export function authLoggedIn(userUID, userName) {
   return (dispatch) => {
-    dispatch(authLoggedInSuccess(userUID));
+    dispatch(authLoggedInSuccess(userUID, userName));
     dispatch(beginAjaxCall());
     firebaseApi.GetChildAddedByKeyOnce('/users', userUID)
       .then(
@@ -55,15 +59,24 @@ export function authLoggedIn(userUID) {
 }
 
 export function createUserWithEmailAndPassword(user) {
+  let userName = user.username;
   return (dispatch) => {
     dispatch(beginAjaxCall());
-    return firebaseApi.createUserWithEmailAndPassword(user).then(user => {
-      dispatch(userCreated(user));
+    return firebaseApi.createUserWithEmailAndPassword(user).then(userData => {
+      dispatch(userCreated(userData));
+      dispatch(assignUserNameToEmail(userName));
     }).catch(error => {
       dispatch(ajaxCallError(error));
       // @TODO better error handling
+      console.log(error);
       throw(error);
     });
+  };
+}
+
+export function assignUserNameToEmail(userName) {
+  return (dispatch) => {
+    return firebaseApi.assignUserNameToEmailId(userName);
   };
 }
 
@@ -73,7 +86,7 @@ export function signInWithEmailAndPassword(user) {
     return firebaseApi.signInWithEmailAndPassword(user)
       .then(
         user => {
-          dispatch(authLoggedIn(user.uid));
+          dispatch(authLoggedIn(user.uid, user.displayName));
         })
       .catch(error => {
         dispatch(ajaxCallError(error));

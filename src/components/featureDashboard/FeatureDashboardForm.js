@@ -18,6 +18,8 @@ function generateRows(data, onChange) {
           <td><input className="big-checkbox" type="checkbox" value="1" id={item} onChange = {onChange} checked = {data[item].environments !== undefined && data[item].environments.indexOf("1") !== -1} /></td>
           <td><input className="big-checkbox" type="checkbox" value="2" id={item} onChange = {onChange} checked = {data[item].environments !== undefined && data[item].environments.indexOf("2") !== -1} /></td>
           <td><input className="big-checkbox" type="checkbox" value="3" id={item} onChange = {onChange} checked = {data[item].environments !== undefined && data[item].environments.indexOf("3") !== -1} /></td>
+          <td>{data[item].createdUser}</td>
+          <td>{data[item].lastModifiedUser}</td>
         </tr>
       );
     }
@@ -39,6 +41,8 @@ const FeatureDashboardForm = ({features, onChange}) => {
               <th>INT</th>
               <th>QA</th>
               <th>PROD</th>
+              <th>Created by</th>
+              <th>Last Updated by</th>
             </tr>
           </thead>
           <tbody>
