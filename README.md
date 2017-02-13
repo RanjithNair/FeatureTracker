@@ -1,11 +1,10 @@
-Firebase 3.0 Starter using React Redux
+Features Tracker
 =====================
 
-This is a Firebase 3.0 start using React and Redux.
+This is a web application to track the features for a scrum team. For a scrum team, there are frequent releases and it becomes difficult to maintain the list of items which are scheduled for release. This app helps the team to track the release items.
 
-It uses the latest version of libraries, including the brand new React Hot Loader ([still beta](https://github.com/gaearon/react-hot-loader/pull/240))
 
-## Stack
+## Tech Stack
 
 - React
   - [X] React `15.1.0`
@@ -32,27 +31,13 @@ It uses the latest version of libraries, including the brand new React Hot Loade
   - [X] Enzyme `2.3.0`
 
 
-## Features
-
-- Firebase:
-  - Auth
-    - [X] Authentication setup (Registration/Login) 
-    - [X] state.user sync with Firebase Auth
-    - [X] Protected routes (needs to be logged in)    
-    - [X] Store users on `'/users/<user.uid>'`
-    - [X] Admin flag on user (`'/isAdmin/<user.uid>' :: bool`)
-    - [X] Admin Protected routes (needs to be logged in)
-  - Database
-    - [X] Set example
-    - [X] Query example 
-
 ## Usage
 
 ```
-git clone git@github.com:douglascorrea/react-hot-redux-firebase-starter.git
-cd react-hot-redux-firebase-starter
+git clone https://github.com/RanjithNair/FeatureTracker.git
+cd FeatureTracker
 npm install
-npm start -s
+npm start
 ```
 
 ## Development Tasks
@@ -60,7 +45,3 @@ npm start -s
 - `npm start` run the web app with lint and tests in watch mode
 - `npm run lint` linting javascript code usig eslint
 - `npm run test` test using mocha and enzyme
-
-## Roadmap
-
-Check our [roadmap issues](https://github.com/douglascorrea/react-hot-redux-firebase-starter/issues?q=is%3Aissue+is%3Aopen+label%3Aroadmap)
