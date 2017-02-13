@@ -8,7 +8,7 @@ const TextInput = ({type = "text", name, label, onChange, placeholder, value, er
 
   return (
     <div className={wrapperClass}>
-      <label htmlFor={name}>{label}</label>
+      <label className="white-label" htmlFor={name}>{label}</label>
       <div className="field">
         <input
           type={type}
