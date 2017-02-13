@@ -27,6 +27,15 @@ class FirebaseApi {
     return firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
   }
 
+  static sendEmailVerificationLink() {
+    var user = firebase.auth().currentUser;
+    user.sendEmailVerification().then(function() {
+      return true;
+    }, function(error) {
+      console.log(error);
+    });
+  }
+
   static signInWithEmailAndPassword(user) {
     return firebase.auth().signInWithEmailAndPassword(user.email, user.password);
   }

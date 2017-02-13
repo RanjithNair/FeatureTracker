@@ -1,5 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
+import moment from 'moment';
+
+function getFormattedTime(value) {
+  return moment(value).format("MM-DD-YYYY HH:mm:ss");
+}
 
 function generateRows(data, onChange) {
     let rows = [];
@@ -15,21 +20,22 @@ function generateRows(data, onChange) {
           <td>{data[item].sprintNum}</td>
           <td>{data[item].releaseTitle}</td>
           <td>{data[item].featureTitle}</td>
-          <td><input className="big-checkbox" type="checkbox" value="1" id={item} onChange = {onChange} checked = {data[item].environments !== undefined && data[item].environments.indexOf("1") !== -1} /></td>
-          <td><input className="big-checkbox" type="checkbox" value="2" id={item} onChange = {onChange} checked = {data[item].environments !== undefined && data[item].environments.indexOf("2") !== -1} /></td>
-          <td><input className="big-checkbox" type="checkbox" value="3" id={item} onChange = {onChange} checked = {data[item].environments !== undefined && data[item].environments.indexOf("3") !== -1} /></td>
+          <td><input className="big-checkbox" type="checkbox" value="1" onChange = {onChange.bind(this, item)} checked = {data[item].environments !== undefined && data[item].environments.indexOf("1") !== -1} /></td>
+          <td><input className="big-checkbox" type="checkbox" value="2" onChange = {onChange.bind(this, item)} checked = {data[item].environments !== undefined && data[item].environments.indexOf("2") !== -1} /></td>
+          <td><input className="big-checkbox" type="checkbox" value="3" onChange = {onChange.bind(this, item)} checked = {data[item].environments !== undefined && data[item].environments.indexOf("3") !== -1} /></td>
           <td>{data[item].createdUser}</td>
-          <td>{data[item].lastModifiedUser}</td>
+          <td>{data[item].lastModifiedUser} {getFormattedTime(data[item].lastModifiedDtm)}</td>
         </tr>
       );
     }
     return rows;
 }
 
-const FeatureDashboardForm = ({features, onChange}) => {
+const FeatureDashboardForm = ({features, filteredFeatures, onChange, onFilterTextChange}) => {
   return (
     <div className="container">
       <h2>Feature Dashboard</h2>
+      <input type="text" placeholder="Enter title" onChange={onFilterTextChange} />
       <div className="table-responsive">
         <table className="table">
           <thead>
@@ -46,7 +52,8 @@ const FeatureDashboardForm = ({features, onChange}) => {
             </tr>
           </thead>
           <tbody>
-            {features !== null ? generateRows(features, onChange): null}
+            {filteredFeatures !== null ? generateRows(filteredFeatures, onChange) : null}
+            {features !== null && filteredFeatures === null ? generateRows(features, onChange): null}
           </tbody>
         </table>
       </div>

@@ -3,6 +3,8 @@ import TextInput from '../common/TextInput';
 
 const RegistrationForm = ({user, onSave, onChange, saving}) => {
   return (
+    <div className="test">
+    <div className="login">
     <form>
       <h1>Create account</h1>
       <TextInput
@@ -13,7 +15,7 @@ const RegistrationForm = ({user, onSave, onChange, saving}) => {
         />
       <TextInput
         name="username"
-        label="username"
+        label="User Name"
         onChange={onChange}
         value={user.name}
       />
@@ -32,6 +34,8 @@ const RegistrationForm = ({user, onSave, onChange, saving}) => {
         className="btn btn-primary"
         onClick={onSave}/>
     </form>
+  </div>
+  </div>
   );
 };
 
