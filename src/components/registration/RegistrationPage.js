@@ -36,8 +36,7 @@ export class RegistrationPage extends React.Component {
     this.props.actions.createUserWithEmailAndPassword(this.state.user)
       .then((user) => {
         toastr.success('User Created');
-        // Check whether the user is email verified
-        console.log(user);
+        toastr.warning('Please verify your email');
         this.context.router.push('/newfeature');
       })
       .catch(error => {
