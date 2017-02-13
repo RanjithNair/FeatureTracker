@@ -47,7 +47,6 @@ export function authLoggedIn(userUID, userName) {
       .then(
         user => {
           dispatch(userLoadedSuccess(user.val()));
-          dispatch(push('/'));
         })
       .catch(
         error => {
@@ -65,6 +64,7 @@ export function createUserWithEmailAndPassword(user) {
     return firebaseApi.createUserWithEmailAndPassword(user).then(userData => {
       dispatch(userCreated(userData));
       dispatch(assignUserNameToEmail(userName));
+      dispatch(sendEmailVerification());
     }).catch(error => {
       dispatch(ajaxCallError(error));
       // @TODO better error handling
@@ -80,13 +80,26 @@ export function assignUserNameToEmail(userName) {
   };
 }
 
+export function sendEmailVerification() {
+  return (dispatch) => {
+    return firebaseApi.sendEmailVerificationLink();
+  };
+}
+
 export function signInWithEmailAndPassword(user) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
     return firebaseApi.signInWithEmailAndPassword(user)
       .then(
         user => {
-          dispatch(authLoggedIn(user.uid, user.displayName));
+          if(user.emailVerified) {
+            dispatch(authLoggedIn(user.uid, user.displayName));
+            dispatch(push('/newfeature'));
+          } else {
+            dispatch(signOut());
+            throw new Error('Please verify your email');
+          }
+          return user;
         })
       .catch(error => {
         dispatch(ajaxCallError(error));

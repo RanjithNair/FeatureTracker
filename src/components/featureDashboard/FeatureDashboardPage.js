@@ -9,31 +9,58 @@ export class FeatureDashboardPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.updateUserState = this.updateUserState.bind(this);
+    this.onFilterTextChange = this.onFilterTextChange.bind(this);
+    this.state = ({
+      filteredItems: null
+    });
   }
 
   componentDidMount() {
     this.props.actions.getFeatures();
   }
 
-  updateUserState(event) {
+  onFilterTextChange(event) {
+    const features = this.props.features;
+    let filteredItems = {};
+    for(let item in features) {
+      if(features[item].featureTitle.toLowerCase().search(event.currentTarget.value.toLowerCase()) !== -1) {
+        filteredItems[item] = features[item];
+      }
+    }
+    this.setState({
+      filteredItems
+    });
+  }
+
+updateUserState(selectedItem, event) {
+    if(event !== undefined) {
     // Get the value of the environments from featureList
-    for(let item in this.props.features) {
-      if(event.target.id === item) {
-        let envValue
-        if(this.props.features[item].environments == undefined) {
-          envValue = [];
-        } else {
-          envValue = this.props.features[item].environments.slice(0);
-        }
-        if(event.target.checked) {
-          if(envValue.indexOf(event.target.value) === -1){
-            envValue.push(event.target.value);
+      for(let item in this.props.features) {
+        if(selectedItem === item) {
+          let envValue
+          if(this.props.features[item].environments == undefined) {
+            envValue = [];
+          } else {
+            envValue = this.props.features[item].environments.slice(0);
           }
-        }else{
-          envValue.splice(envValue.indexOf(event.target.value),1);
+          if(event.target.checked) {
+            if(envValue.indexOf(event.target.value) === -1){
+              envValue.push(event.target.value);
+            }
+          }else{
+            envValue.splice(envValue.indexOf(event.target.value),1);
+          }
+          this.props.actions.updateFeature(selectedItem,'environments',envValue);
+          // this same change should be reflected in state variable also
+          if(this.state.filteredItems !== null) {
+            let storedStateVal = Object.assign({}, this.state.filteredItems);
+            storedStateVal[selectedItem].environments = envValue;
+            this.setState({
+              filteredItems : storedStateVal
+            });
+          }
+          toastr.success('Feature Updated');
         }
-        this.props.actions.updateFeature(event.target.id,'environments',envValue);
-        toastr.success('Feature Updated');
       }
     }
   }
@@ -42,7 +69,9 @@ export class FeatureDashboardPage extends React.Component {
     return (
       <FeatureDashboardForm
         features={this.props.features}
+        filteredFeatures={this.state.filteredItems}
         onChange={this.updateUserState}
+        onFilterTextChange={this.onFilterTextChange}
       />
     );
   }
